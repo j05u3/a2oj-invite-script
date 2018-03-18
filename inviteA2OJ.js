@@ -1,6 +1,9 @@
 "use strict";
 
-var users = ["gsalvadorr", "kjneciosup", "KO_Var", "samirharry", "erosjbc", "Valent", "cristhian3798", "sandro_castillo_751", "carlos.ar", "jrojas111", "leonardo19022001", "JrAlf", "JotFe", "PauloCS", "Blessed1202", "brunoluyauni", "skadrock", "Datero300", "gsparrow"];
+var usersNoFIIS = ["rude_dude", "KVN_OS20", "Astrophysicist", "peluka79", "jaespinoza10", "OrlandoReCh", "Darklab", "compileplis", "_Odi", "PoolConde", "gsus___"];
+var usersFIIS = ["gsalvadorr", "kjneciosup", "KO_Var", "samirharry", "erosjbc", "Valent", "cristhian3798", "sandro_castillo_751", "carlos.ar", "jrojas111", "leonardo19022001", "JrAlf", "JotFe", "PauloCS", "Blessed1202", "brunoluyauni", "skadrock", "Datero300", "gsparrow"];
+
+var users = usersNoFIIS.concat(usersFIIS);
 
 var fs = require('fs');
 var page = require('webpage').create();
@@ -23,7 +26,7 @@ page.onResourceTimeout = function(e) {
 setTimeout(function() {
         console.log(JSON.stringify({"STATUS": "WHOLE_SCRIPT_TIMEOUT"}));
         phantom.exit();
-}, 2*60*1000); // two minutes timeout
+}, 3*60*1000); // three minutes timeout
 
 var credentials = {user: "", pass: ""};
 var contestId = ""; // contest id
@@ -132,7 +135,11 @@ page.open("https://a2oj.com/signin?url=%2F", function (status) {
                             }
 
                             function recursiveInvitation(users, i) {
-                                if (i == users.length) return;
+                                if (i == users.length) {
+                                    console.log(JSON.stringify({"STATUS": "COMPLETED_SUCCESSFULLY"}));
+                                    phantom.exit();
+                                    return;
+                                }
                                 var userid = users[i];
                                 page.evaluate(function (userid) {
                                     $("#Username").val(userid);
